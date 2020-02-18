@@ -4,7 +4,6 @@ about: Something isn't working as expected?
 ---
 
 <!-- Please search existing issues to avoid creating duplicates. -->
-
 ### Bug 🐞
 <!-- Provide as much useful information as you can. -->
 
