@@ -4,7 +4,7 @@ about: Something isn't working as expected?
 ---
 
 ### Bug 🐞
-<!-- Search existing issues to avoid duplicates. Provide as much useful information as you can. -->
+<!-- Search existing issues to avoid duplicates. Provide detailed report. -->
 
 
 

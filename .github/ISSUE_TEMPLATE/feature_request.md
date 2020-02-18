@@ -5,7 +5,7 @@ about: Suggest new idea for the project
 ---
 
 ### Feature ✨
-<!-- Search existing issues to avoid duplicates. Provide as much useful information as you can. -->
+<!-- Search existing issues to avoid duplicates. Provide detailed request. -->
 
 
 
