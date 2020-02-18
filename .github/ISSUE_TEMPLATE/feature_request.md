@@ -4,9 +4,8 @@ about: Suggest new idea for the project
 
 ---
 
-<!-- Please search existing issues to avoid creating duplicates. -->
 ### Feature ✨
-<!-- Provide as much useful information as you can. -->
+<!-- Search existing issues to avoid duplicates. Provide as much useful information as you can. -->
 
 
 

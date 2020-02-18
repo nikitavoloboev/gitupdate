@@ -1,6 +1,5 @@
-<!-- Thanks for submitting this PR. Have any questions? Check out contributing docs. -->
 ### Summary
-<!-- Reference related issues: Fix #00, Ref #00 -->
+<!-- Check contributing docs first. Reference related issues: Fix #00, Ref #00 -->
 
 
 
