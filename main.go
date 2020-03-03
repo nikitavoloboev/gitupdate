@@ -28,7 +28,7 @@ func main() {
 
 // Track all files in given folder path, commit with file names as commit msg & push to remote.
 func update(path string) {
-	cmd := exec.Command("/usr/local/bin/git")
+	cmd := exec.Command("git")
 	cmd.Dir = path
 	cmd.Args = []string{"git", "diff", "HEAD", "--name-only"}
 	out, err := cmd.Output()
@@ -44,7 +44,7 @@ func update(path string) {
 			filesChanged = append(filesChanged, strings.Split(last, ".")[0])
 		}
 		// Track files changed by Git
-		cmd = exec.Command("/usr/local/bin/git")
+		cmd = exec.Command("git")
 		cmd.Dir = path
 		cmd.Args = []string{"git", "add", "."}
 		_, err := cmd.Output()
@@ -54,7 +54,7 @@ func update(path string) {
 		commitMsg := strings.Join(filesChanged, " ")
 
 		// Commit with a message
-		cmd = exec.Command("/usr/local/bin/git")
+		cmd = exec.Command("git")
 		cmd.Dir = path
 		cmd.Args = []string{"git", "commit", "-m", commitMsg}
 		_, err = cmd.Output()
@@ -63,7 +63,7 @@ func update(path string) {
 		}
 
 		// Push changes
-		cmd = exec.Command("/usr/local/bin/git")
+		cmd = exec.Command("git")
 		cmd.Dir = path
 		cmd.Args = []string{"git", "push"}
 		_, err = cmd.Output()
