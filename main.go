@@ -1,13 +1,32 @@
 package main
 
 import (
+	"flag"
 	"log"
 	"os"
 	"os/exec"
 	"strings"
 )
 
+func removeDuplicates(elements []string) []string {
+	encountered := map[string]bool{}
+	result := []string{}
+
+	for v := range elements {
+		if encountered[elements[v]] == true {
+			// Don't do anything
+		} else {
+			encountered[elements[v]] = true
+			result = append(result, elements[v])
+		}
+	}
+
+	return result
+}
+
 func main() {
+	topPtr := flag.Bool("top", false, "")
+
 	args := os.Args
 	if len(args) < 2 {
 		log.Fatal("Please provide a path as argument.")
@@ -19,15 +38,15 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		update(path)
+		update(path, *topPtr)
 	} else {
 		// Use passed in path
-		update(args[1:][0])
+		update(args[1:][0], *topPtr)
 	}
 }
 
 // Track all files in given folder path, commit with file names as commit msg & push to remote.
-func update(path string) {
+func update(path string, top bool) {
 	cmd := exec.Command("git")
 	cmd.Dir = path
 	cmd.Args = []string{"git", "diff", "HEAD", "--name-only"}
@@ -40,8 +59,16 @@ func update(path string) {
 		// Get all files changed without extension
 		for _, v := range outS {
 			split := strings.Split(v, "/")
-			last := split[len(split)-1]
-			filesChanged = append(filesChanged, strings.Split(last, ".")[0])
+			if top {
+				first := split[0]
+				filesChanged = append(filesChanged, first)
+			} else {
+				last := split[len(split)-1]
+				filesChanged = append(filesChanged, strings.Split(last, ".")[0])
+			}
+		}
+		if top {
+			filesChanged = removeDuplicates(filesChanged)
 		}
 		// Track files changed by Git
 		cmd = exec.Command("git")
