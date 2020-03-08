@@ -67,9 +67,7 @@ func update(path string, top bool) {
 				filesChanged = append(filesChanged, strings.Split(last, ".")[0])
 			}
 		}
-		if top {
-			filesChanged = removeDuplicates(filesChanged)
-		}
+		filesChanged = removeDuplicates(filesChanged)
 		// Track files changed by Git
 		cmd = exec.Command("git")
 		cmd.Dir = path
