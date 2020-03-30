@@ -49,51 +49,51 @@ func main() {
 func update(path string, top bool) {
 	cmd := exec.Command("git")
 	cmd.Dir = path
-	cmd.Args = []string{"git", "diff", "HEAD", "--name-only"}
-	out, err := cmd.Output()
+	cmd.Args = []string{"git", "add", "."}
+	_, err := cmd.Output()
 	if err != nil {
 		log.Fatal(err)
 	} else {
-		outS := strings.Fields(string(out))
-		filesChanged := make([]string, 0)
-		// Get all files changed without extension
-		for _, v := range outS {
-			split := strings.Split(v, "/")
-			if top {
-				first := split[0]
-				filesChanged = append(filesChanged, first)
-			} else {
-				last := split[len(split)-1]
-				filesChanged = append(filesChanged, strings.Split(last, ".")[0])
+		cmd = exec.Command("git")
+		cmd.Dir = path
+		cmd.Args = []string{"git", "diff", "HEAD", "--name-only"}
+		out, err := cmd.Output()
+		if err != nil {
+			log.Fatal(err)
+		} else {
+			outS := strings.Fields(string(out))
+			filesChanged := make([]string, 0)
+			// Get all files changed without extension
+			for _, v := range outS {
+				split := strings.Split(v, "/")
+				if top {
+					first := split[0]
+					filesChanged = append(filesChanged, first)
+				} else {
+					last := split[len(split)-1]
+					filesChanged = append(filesChanged, strings.Split(last, ".")[0])
+				}
 			}
-		}
-		filesChanged = removeDuplicates(filesChanged)
-		// Track files changed by Git
-		cmd = exec.Command("git")
-		cmd.Dir = path
-		cmd.Args = []string{"git", "add", "."}
-		_, err := cmd.Output()
-		if err != nil {
-			log.Fatal(err)
-		}
-		commitMsg := strings.Join(filesChanged, " ")
+			filesChanged = removeDuplicates(filesChanged)
 
-		// Commit with a message
-		cmd = exec.Command("git")
-		cmd.Dir = path
-		cmd.Args = []string{"git", "commit", "-m", commitMsg}
-		_, err = cmd.Output()
-		if err != nil {
-			log.Fatal(err)
-		}
+			// Commit with a message
+			commitMsg := strings.Join(filesChanged, " ")
+			cmd = exec.Command("git")
+			cmd.Dir = path
+			cmd.Args = []string{"git", "commit", "-m", commitMsg}
+			_, err = cmd.Output()
+			if err != nil {
+				log.Fatal(err)
+			}
 
-		// Push changes
-		cmd = exec.Command("git")
-		cmd.Dir = path
-		cmd.Args = []string{"git", "push"}
-		_, err = cmd.Output()
-		if err != nil {
-			log.Fatal(err)
+			// Push changes
+			cmd = exec.Command("git")
+			cmd.Dir = path
+			cmd.Args = []string{"git", "push"}
+			_, err = cmd.Output()
+			if err != nil {
+				log.Fatal(err)
+			}
 		}
 	}
 }
