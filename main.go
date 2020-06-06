@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 )
 
@@ -25,38 +26,43 @@ func removeDuplicates(elements []string) []string {
 }
 
 func main() {
-	topPtr := flag.Bool("top", false, "")
+	// Option to only consider top level folders
+	topLevelOnly := flag.Bool("top", false, "")
 
 	args := os.Args
 	if len(args) < 2 {
 		log.Fatal("Please provide a path as argument.")
 	}
 
+	path, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	if args[1:][0] == "." {
-		// Use current path
-		path, err := os.Getwd()
-		if err != nil {
-			log.Fatal(err)
-		}
-		update(path, *topPtr)
+		update(path, *topLevelOnly)
 	} else {
-		// Use passed in path
-		update(args[1:][0], *topPtr)
+		update(path+"/"+args[1:][0], *topLevelOnly)
 	}
 }
 
-// Track all files in given folder path, commit with file names as commit msg & push to remote.
-func update(path string, top bool) {
+// Track & update files in passed in path.
+// If it's folder, commit entire folder. If one file, commit the file.
+// Commit with file names as commit msg & push to remote.
+func update(path string, topLevelOnly bool) {
 	cmd := exec.Command("git")
+	if strings.Contains(path, ".") {
+		path = filepath.Dir(path)
+	}
 	cmd.Dir = path
-	cmd.Args = []string{"git", "add", "."}
+	cmd.Args = []string{"git", "add", path}
 	_, err := cmd.Output()
 	if err != nil {
 		log.Fatal(err)
 	} else {
 		cmd = exec.Command("git")
 		cmd.Dir = path
-		cmd.Args = []string{"git", "diff", "HEAD", "--name-only"}
+		cmd.Args = []string{"git", "diff", "--cached", "HEAD", "--name-only"}
 		out, err := cmd.Output()
 		if err != nil {
 			log.Fatal(err)
@@ -66,7 +72,7 @@ func update(path string, top bool) {
 			// Get all files changed without extension
 			for _, v := range outS {
 				split := strings.Split(v, "/")
-				if top {
+				if topLevelOnly {
 					first := split[0]
 					filesChanged = append(filesChanged, first)
 				} else {
