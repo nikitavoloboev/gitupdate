@@ -51,12 +51,17 @@ func main() {
 // Commit with file names as commit msg & push to remote.
 func update(path string, topLevelOnly bool) {
 	cmd := exec.Command("git")
-	if strings.Contains(path, ".") {
+	file, err := os.Stat(path)
+	if err != nil {
+		log.Fatal(err)
+	}
+	// if it's not dir, then strip the extension
+	if !file.IsDir() {
 		path = filepath.Dir(path)
 	}
 	cmd.Dir = path
 	cmd.Args = []string{"git", "add", path}
-	_, err := cmd.Output()
+	_, err = cmd.Output()
 	if err != nil {
 		log.Fatal(err)
 	} else {
