@@ -7,7 +7,7 @@ Thank you for taking the time to contribute! ♥️ You can:
 
 ## Run project
 
-1. Clone repo (`git clone https://github.com/nikitavoloboev/gitupdate`)
+1. Clone repo
 2. If you use [VSCode](https://code.visualstudio.com) with [Go](https://github.com/microsoft/vscode-go) plugin, it will install all Go dependencies for you in the background when you open the project.
 3. Edit the code & run it with `go run .`.
 
