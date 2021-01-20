@@ -99,7 +99,7 @@ func update(path string, topLevelOnly bool) {
 			if err != nil {
 				log.Fatal(err)
 			}
-			println(out)
+			println(string(out))
 
 			// Push changes
 			return;	
