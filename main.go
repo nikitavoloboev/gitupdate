@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"os"
 	"os/exec"
@@ -74,6 +75,7 @@ func update(path string, topLevelOnly bool) {
 		} else {
 			outS := strings.Fields(string(out))
 			filesChanged := make([]string, 0)
+			fmt.Println(outS)
 			// Get all files changed without extension
 			for _, v := range outS {
 				split := strings.Split(v, "/")
@@ -81,19 +83,20 @@ func update(path string, topLevelOnly bool) {
 					first := split[0]
 					filesChanged = append(filesChanged, first)
 				} else {
-					last := split[len(split)-1]
-					filesChanged = append(filesChanged, strings.Split(last, ".")[0])
+					filename := split[len(split)-1]
+					normalizedFilename := strings.TrimPrefix(filename, ".")
+					basename := strings.Split(normalizedFilename, ".")[0]
+					filesChanged = append(filesChanged, basename)
 				}
 			}
+			fmt.Println(filesChanged)
 			filesChanged = removeDuplicates(filesChanged)
+			fmt.Println(filesChanged)
 
 			// Commit with a message
 			commitMsg := strings.Join(filesChanged, " ")
 			cmd = exec.Command("git")
 			cmd.Dir = path
-			println("about to commit with message:", commitMsg)
-			println("buuuuut.... we're not ready for that yet")
-			// return
 			cmd.Args = []string{"git", "commit", "-m", commitMsg}
 			out, err = cmd.Output()
 			if err != nil {
