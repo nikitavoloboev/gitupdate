@@ -95,10 +95,11 @@ func update(path string, topLevelOnly bool) {
 			println("buuuuut.... we're not ready for that yet")
 			// return
 			cmd.Args = []string{"git", "commit", "-m", commitMsg}
-			_, err = cmd.Output()
+			out, err = cmd.Output()
 			if err != nil {
 				log.Fatal(err)
 			}
+			println(out)
 
 			// Push changes
 			return;	
