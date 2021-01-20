@@ -91,6 +91,9 @@ func update(path string, topLevelOnly bool) {
 			commitMsg := strings.Join(filesChanged, " ")
 			cmd = exec.Command("git")
 			cmd.Dir = path
+			println("about to commit with message:", commitMsg)
+			println("buuuuut.... we're not ready for that yet")
+			// return
 			cmd.Args = []string{"git", "commit", "-m", commitMsg}
 			_, err = cmd.Output()
 			if err != nil {
