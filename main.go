@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"log"
 	"os"
 	"os/exec"
@@ -75,7 +74,6 @@ func update(path string, topLevelOnly bool) {
 		} else {
 			outS := strings.Fields(string(out))
 			filesChanged := make([]string, 0)
-			fmt.Println(outS)
 			// Get all files changed without extension
 			for _, v := range outS {
 				split := strings.Split(v, "/")
@@ -89,9 +87,7 @@ func update(path string, topLevelOnly bool) {
 					filesChanged = append(filesChanged, basename)
 				}
 			}
-			fmt.Println(filesChanged)
 			filesChanged = removeDuplicates(filesChanged)
-			fmt.Println(filesChanged)
 
 			// Commit with a message
 			commitMsg := strings.Join(filesChanged, " ")
