@@ -101,6 +101,7 @@ func update(path string, topLevelOnly bool) {
 			}
 
 			// Push changes
+			return;	
 			cmd = exec.Command("git")
 			cmd.Dir = path
 			cmd.Args = []string{"git", "push"}
