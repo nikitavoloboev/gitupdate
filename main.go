@@ -94,14 +94,12 @@ func update(path string, topLevelOnly bool) {
 			cmd = exec.Command("git")
 			cmd.Dir = path
 			cmd.Args = []string{"git", "commit", "-m", commitMsg}
-			out, err = cmd.Output()
+			_, err = cmd.Output()
 			if err != nil {
 				log.Fatal(err)
 			}
-			println(string(out))
 
 			// Push changes
-			return;	
 			cmd = exec.Command("git")
 			cmd.Dir = path
 			cmd.Args = []string{"git", "push"}
