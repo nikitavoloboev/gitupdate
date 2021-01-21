@@ -81,8 +81,10 @@ func update(path string, topLevelOnly bool) {
 					first := split[0]
 					filesChanged = append(filesChanged, first)
 				} else {
-					last := split[len(split)-1]
-					filesChanged = append(filesChanged, strings.Split(last, ".")[0])
+					filename := split[len(split)-1]
+					normalizedFilename := strings.TrimPrefix(filename, ".")
+					basename := strings.Split(normalizedFilename, ".")[0]
+					filesChanged = append(filesChanged, basename)
 				}
 			}
 			filesChanged = removeDuplicates(filesChanged)
