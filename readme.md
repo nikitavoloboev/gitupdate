@@ -18,7 +18,7 @@ Or if you are already in the git directory you want to commit, run:
 
 `gitupdate .`
 
-This will add all files that have changed since last commit and will include all the file names (without extension) as the commit message. [Example use](https://github.com/nikitavoloboev/knowledge/commits/master).
+This will add all files that have changed since last commit and will include all the file names (without extension) as the commit message. [Example use](https://github.com/nikitavoloboev/knowledge/commits/main).
 
 If you want to only consider top level folders for the commit message, use the `--top` (or `-t` for short) flag.
 
