@@ -5,7 +5,7 @@
 ## Install
 
 ```Bash
-go get -u github.com/nikitavoloboev/gitupdate
+go install github.com/nikitavoloboev/gitupdate@latest
 ```
 
 ## Usage
